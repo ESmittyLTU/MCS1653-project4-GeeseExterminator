@@ -13,6 +13,8 @@ public class FirstPersonController : MonoBehaviour
     public Transform groundReference;
     public int inspectorHealth;
     public float invincibilityLength = .5f;
+    public GameObject bulletPrefab;
+    public Transform barrelTip;
 
     public static int health;
     public static Vector3 playerPos;
@@ -89,6 +91,10 @@ public class FirstPersonController : MonoBehaviour
             cameraTransform.localEulerAngles.z);
 
         playerPos = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
+
+        if (Input.GetMouseButtonDown(0)) {
+            GameObject bullet = Instantiate(bulletPrefab, barrelTip.position, barrelTip.rotation);
+        }
 
     }
 

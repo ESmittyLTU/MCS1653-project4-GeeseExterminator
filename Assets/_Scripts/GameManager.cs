@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,13 +9,19 @@ public class GameManager : MonoBehaviour
     public float maxRangeFromPlayer = 20f;
     public GameObject goosePrefab;
     public float gooseSpawnCooldown = 5f;
+    public int geeseWinRequirement = 25;
+    
+    public static int geeseKilledToWin = 25;
+    public static int geeseKilled = 0;
 
     private float gooseSpawnTimer = 0f;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        geeseKilledToWin = geeseWinRequirement;
     }
 
     /* CHECKLIST
@@ -22,12 +29,12 @@ public class GameManager : MonoBehaviour
      * [X] Player movement
      * [X] Geese Spawning (Crashland within range of player)
      * [X] Geese movement (towards player, navmesh video)
-     * [ ] Pistol (held near player view, fires bullets (capsule, trail renderer))
-     * [ ] Geese take damage when bullet hits them (use bool damageDealt to prevent pierce)
+     * [X] Pistol (held near player view, fires bullets (capsule, trail renderer))
+     * [X] Geese take damage when bullet hits them (use bool damageDealt to prevent pierce)
      * [X] Geese deal damage to player (onCollisionStay with a cooldown)
-     * [ ] Geese have a chance to lay landmines every 10/15 seconds
+     * [X] Geese have a chance to lay landmines every 10/15 seconds
      * [X] Landmines explode and deal damage to player on contact
-     * [ ] Player wins after killing X geese (static var)
+     * [X] Player wins after killing X geese (static var)
      * 
      * STRETCH/UNSURE
      * [ ] Cranked (player dies within certain amount of time without killing a goose, just use static timer)
@@ -58,5 +65,13 @@ public class GameManager : MonoBehaviour
 
         Vector3 spawnLocation = FirstPersonController.playerPos += direction;
         Instantiate(goosePrefab, spawnLocation, Quaternion.identity);
+    }
+
+    public static void winCheck()
+    {
+        if (geeseKilled >= geeseKilledToWin)
+        {
+            Debug.Log("YOU WON!");
+        }
     }
 }

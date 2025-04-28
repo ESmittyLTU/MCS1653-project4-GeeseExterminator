@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5563829909202258861}
   m_Layer: 3
   m_Name: Goose
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -56,6 +56,11 @@ MonoBehaviour:
   jumpSpeed: 10
   gooseStandardGravity: 0.4
   gooseFallGravity: 0.75
+  landminePrefab: {fileID: 7342644694136758090, guid: b58db8e5a3c77b142bd6534097089015,
+    type: 3}
+  landmineCooldownSeconds: 10
+  landmineChance: 5
+  health: 3
 --- !u!54 &364706993513351568
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -102,7 +107,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.6
+  m_Radius: 1
   m_Height: 1.75
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}

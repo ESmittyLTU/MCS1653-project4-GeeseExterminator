@@ -12,8 +12,13 @@ public class Goose : MonoBehaviour
     public float jumpSpeed = 10f;
     public float gooseStandardGravity = .9f;
     public float gooseFallGravity = .7f;
+    public GameObject landminePrefab;
+    public float landmineCooldownSeconds = 10f;
+    public int landmineChance = 5; // Chance out of 10 to spawn landmine
+    public int health = 3;
 
     private float damageTimer = 0;
+    private float landmineTimer = 0;
     private Rigidbody rb;
 
     // Start is called before the first frame update
@@ -26,6 +31,14 @@ public class Goose : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (health <= 0)
+        {
+            GameManager.geeseKilled++;
+            Debug.Log($"{GameManager.geeseKilled} geese killed!");
+            GameManager.winCheck();
+            Destroy(gameObject);
+        }
+
         float distFromPlayer = Vector3.Distance(transform.position, FirstPersonController.playerPos);
         //Move to player within range
         if (distFromPlayer > .85f)
@@ -33,7 +46,23 @@ public class Goose : MonoBehaviour
             transform.position = Vector3.MoveTowards(transform.position, FirstPersonController.playerPos, moveSpeed * Time.deltaTime);
         }
 
+        landmineTimer += Time.deltaTime;
         damageTimer += Time.deltaTime;
+
+        if (landmineTimer >= landmineCooldownSeconds)
+        {
+            if (Random.Range(1, 11) <= landmineChance)
+            {
+                Ray ray = new Ray(groundReference.position, Vector3.down);
+                Physics.Raycast(ray, out RaycastHit hit);
+                if (hit.transform.CompareTag("Ground"))
+                {
+                    Vector3 landmineSpawn = hit.point;
+                    Instantiate(landminePrefab, landmineSpawn, Quaternion.identity);
+                }
+            }
+            landmineTimer = 0;
+        }
 
         //If goose is on the ground and the player is substantially higher, allow goose to jump
         if (IsGrounded() && FirstPersonController.playerPos.y > transform.position.y + heightDiffReqForJump)
@@ -61,6 +90,7 @@ public class Goose : MonoBehaviour
         {
             FirstPersonController.health--;
             damageTimer = 0;
+            FirstPersonController.invincible = true;
             Debug.Log($"Player took damage. Health: {FirstPersonController.health}");
 
         }
