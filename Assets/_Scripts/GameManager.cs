@@ -36,6 +36,14 @@ public class GameManager : MonoBehaviour
      * [X] Landmines explode and deal damage to player on contact
      * [X] Player wins after killing X geese (static var)
      * 
+     * FINAL BUILD STATUS
+     * [ ] Terrain
+     * [ ] Bullet dies after time
+     * [ ] Pistol can't fire infinitely
+     * [ ] Pressing one or two disables/enables rocket launcher/pistol
+     * [ ] Geese animations
+     * [ ] Landmine textures
+     * 
      * STRETCH/UNSURE
      * [ ] Cranked (player dies within certain amount of time without killing a goose, just use static timer)
      * [ ] 

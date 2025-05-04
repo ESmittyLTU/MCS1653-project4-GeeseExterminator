@@ -55,7 +55,7 @@ MonoBehaviour:
   heightDiffReqForJump: 3
   jumpSpeed: 10
   gooseStandardGravity: 0.4
-  gooseFallGravity: 0.75
+  gooseFallGravity: 0.4
   landminePrefab: {fileID: 7342644694136758090, guid: b58db8e5a3c77b142bd6534097089015,
     type: 3}
   landmineCooldownSeconds: 10

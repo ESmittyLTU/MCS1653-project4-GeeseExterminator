@@ -15,6 +15,9 @@ public class FirstPersonController : MonoBehaviour
     public float invincibilityLength = .5f;
     public GameObject bulletPrefab;
     public Transform barrelTip;
+    public float shotDelay = 1.5f;
+    public GameObject gun, launcher;
+    public int selectedWeapon = 2;
 
     public static int health;
     public static Vector3 playerPos;
@@ -23,6 +26,8 @@ public class FirstPersonController : MonoBehaviour
     private Rigidbody rb;
     private Transform cameraTransform;
     private float invincibilityTimer = 0f;
+    private float firingTimer = 0;
+    
    
 
     // Start is called before the first frame update
@@ -38,6 +43,7 @@ public class FirstPersonController : MonoBehaviour
     void Update()
     {
 
+        //Invincibility cooldown
         if (invincible)
         {
             invincibilityTimer -= Time.deltaTime;
@@ -53,6 +59,7 @@ public class FirstPersonController : MonoBehaviour
         float v = Input.GetAxis("Vertical");
         float yaw = Input.GetAxis("Mouse X");
         float pitch = Input.GetAxis("Mouse Y");
+        
 
         Vector3 velo = Vector3.zero;
         velo += transform.right * h;
@@ -90,17 +97,27 @@ public class FirstPersonController : MonoBehaviour
             cameraTransform.localEulerAngles.y,
             cameraTransform.localEulerAngles.z);
 
+        //Updating static var playerPos with a vertical offset so that geese don't clip through floor tracking onto player (idk why player y pos isnt centered)
         playerPos = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
 
-        if (Input.GetMouseButtonDown(0)) {
-            GameObject bullet = Instantiate(bulletPrefab, barrelTip.position, barrelTip.rotation);
+        //Click to fire bullet
+        firingTimer += Time.deltaTime;
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (selectedWeapon == 1) 
+            {
+                if (firingTimer >= shotDelay)
+                {
+                    firingTimer = 0;
+                    Instantiate(bulletPrefab, barrelTip.position, barrelTip.rotation);
+                }
+            }
         }
-
     }
 
     private bool IsGrounded()
     {
-        return Physics.Raycast(groundReference.position, Vector3.down, .15f);
+        return Physics.Raycast(groundReference.position, Vector3.down, .25f);
     }
 
     private float angleWithin180(float angle)

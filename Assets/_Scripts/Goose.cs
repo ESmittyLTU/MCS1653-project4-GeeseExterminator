@@ -33,10 +33,7 @@ public class Goose : MonoBehaviour
     {
         if (health <= 0)
         {
-            GameManager.geeseKilled++;
-            Debug.Log($"{GameManager.geeseKilled} geese killed!");
-            GameManager.winCheck();
-            Destroy(gameObject);
+            deathActions();
         }
 
         float distFromPlayer = Vector3.Distance(transform.position, FirstPersonController.playerPos);
@@ -54,8 +51,8 @@ public class Goose : MonoBehaviour
             if (Random.Range(1, 11) <= landmineChance)
             {
                 Ray ray = new Ray(groundReference.position, Vector3.down);
-                Physics.Raycast(ray, out RaycastHit hit);
-                if (hit.transform.CompareTag("Ground"))
+                bool didHit = Physics.Raycast(ray, out RaycastHit hit);
+                if (didHit && hit.transform.CompareTag("Ground"))
                 {
                     Vector3 landmineSpawn = hit.point;
                     Instantiate(landminePrefab, landmineSpawn, Quaternion.identity);
@@ -69,6 +66,14 @@ public class Goose : MonoBehaviour
         {
             rb.velocity = Vector3.up * jumpSpeed;
         }
+    }
+
+    public void deathActions()
+    {
+        GameManager.geeseKilled++;
+        Debug.Log($"{GameManager.geeseKilled} geese killed!");
+        GameManager.winCheck();
+        Destroy(gameObject);
     }
 
     void FixedUpdate()

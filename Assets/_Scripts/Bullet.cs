@@ -6,12 +6,20 @@ public class Bullet : MonoBehaviour
 {
     public float speed = 20f;
     public int damage = 1;
+    public float maxTimeAlive = 2f;
 
     private bool hitSomething = false;
+    private float timeAlive = 0;
 
     private void Update()
     {
         transform.position += transform.forward * speed * Time.deltaTime;
+        timeAlive += Time.deltaTime;
+        if (timeAlive > maxTimeAlive)
+        {
+            hitSomething = true;
+            Destroy(gameObject);
+        }
     }
 
     private void OnCollisionEnter(Collision other)
