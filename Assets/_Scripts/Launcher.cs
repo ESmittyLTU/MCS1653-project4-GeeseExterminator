@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.UI;
 
 public class Launcher : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class Launcher : MonoBehaviour
     public LayerMask groundLayerMask;
     public float launcherCooldown = 15f;
     public GameObject nukePrefab;
+    public Image launcherRadialMeter;
 
     private float launcherTimer = 10;
     private Ray laserRay;
@@ -24,17 +26,18 @@ public class Launcher : MonoBehaviour
 
     private void Update()
     {
-        //Update the timer, and if 
+        //Update the timer, and if cooldown over, activate laser
         launcherTimer += Time.deltaTime;
         if (!laser.activeSelf && launcherTimer >= launcherCooldown)
         {
             laser.SetActive(true);
             crosshairProjector.enabled = true;
         }
+        launcherRadialMeter.fillAmount = launcherTimer / launcherCooldown;
 
         
         //If laser is active, draw a ray from it and put the crosshair on the ground
-        if (laser.activeSelf)
+        if (laser.activeSelf && laserPointer.activeSelf)
         {
             //Debug.DrawRay(laserPointer.transform.position, laserPointer.transform.up * laserLength, Color.green);
             laserRay = new Ray(laserPointer.transform.position, laserPointer.transform.up);

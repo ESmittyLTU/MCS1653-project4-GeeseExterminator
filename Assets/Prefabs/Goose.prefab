@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.9, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2634029686675455892}
@@ -49,7 +49,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87832dbe45ace38459c543cf813a2d91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 13
+  moveSpeed: 15
   damageCooldownSeconds: 2
   groundReference: {fileID: 5329541235559148648}
   heightDiffReqForJump: 3
@@ -58,9 +58,10 @@ MonoBehaviour:
   gooseFallGravity: 0.4
   landminePrefab: {fileID: 7342644694136758090, guid: b58db8e5a3c77b142bd6534097089015,
     type: 3}
-  landmineCooldownSeconds: 10
+  landmineCooldownSeconds: 7.5
   landmineChance: 5
   health: 3
+  anim: {fileID: 7819051599237513522}
 --- !u!54 &364706993513351568
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -145,6 +146,7 @@ GameObject:
   - component: {fileID: 2634029686675455892}
   - component: {fileID: 7299695521818785488}
   - component: {fileID: 1865102842262897296}
+  - component: {fileID: 7819051599237513522}
   m_Layer: 3
   m_Name: TextureHolder
   m_TagString: Untagged
@@ -162,7 +164,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0.229, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1953168522936475064}
@@ -208,7 +210,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: c0ef36200ed608146be226f34ec0d4cf, type: 3}
+  m_Sprite: {fileID: -1894022746, guid: bf669df7fec9d88479b72790ccd0e2fe, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -231,6 +233,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 343845d7c60ec424ca784ebed81e95ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &7819051599237513522
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2374509515527517793}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 32ccb0fa16fb0b9418437f5c95a745cb, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &3904851399669044104
 GameObject:
   m_ObjectHideFlags: 0

@@ -4937,6 +4937,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nukeLight: {fileID: 579940470752679800}
+  blastRadius: 35
 --- !u!1 &1845158137089157350
 GameObject:
   m_ObjectHideFlags: 0

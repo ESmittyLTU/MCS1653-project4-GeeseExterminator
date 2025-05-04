@@ -1,6 +1,6 @@
-using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -10,11 +10,17 @@ public class GameManager : MonoBehaviour
     public GameObject goosePrefab;
     public float gooseSpawnCooldown = 5f;
     public int geeseWinRequirement = 25;
-    
+    public Light mainLight;
+    public LayerMask groundLayerMask;
+    public float initialDelayAmount = 10f;
+
     public static int geeseKilledToWin = 25;
     public static int geeseKilled = 0;
 
     private float gooseSpawnTimer = 0f;
+    private float exposure = 1;
+    private bool initialDelay = true;
+    private float initialTimer = 0f;
 
     // Start is called before the first frame update
     void Start()
@@ -56,7 +62,16 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        gooseSpawnTimer += Time.deltaTime;
+        if (!initialDelay) { 
+            gooseSpawnTimer += Time.deltaTime; 
+        } else
+        {
+            initialTimer += Time.deltaTime;
+            if (initialTimer >= initialDelayAmount)
+            {
+                initialDelay = false;
+            }
+        }
         if (gooseSpawnTimer >= gooseSpawnCooldown)
         {
             spawnGoose();
@@ -71,8 +86,15 @@ public class GameManager : MonoBehaviour
         direction *= Random.Range(minRangeFromPlayer, maxRangeFromPlayer);
         //Particle effect + play a sound
 
-        Vector3 spawnLocation = FirstPersonController.playerPos += direction;
-        Instantiate(goosePrefab, spawnLocation, Quaternion.identity);
+        Vector3 spawnLocation = FirstPersonController.playerPos += direction + Vector3.up * 200;
+
+        Ray ray = new Ray(spawnLocation, Vector3.down);
+        bool didHit = Physics.Raycast(ray, out RaycastHit hit, 300f, groundLayerMask);
+        if (didHit && hit.transform.CompareTag("Ground"))
+        {
+            Vector3 gooseSpawn = hit.point;
+            Instantiate(goosePrefab, gooseSpawn, Quaternion.identity);
+        }
     }
 
     public static void winCheck()
@@ -81,5 +103,35 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("YOU WON!");
         }
+    }
+
+    public void dimTheLights()
+    {
+        exposure -= .0066666f;
+        mainLight.intensity = exposure;
+        if (exposure > .05f)
+        {
+            RenderSettings.skybox.SetFloat("_Exposure", exposure);
+        }
+    }
+
+    public void blastTheLights()
+    {
+        exposure = 3;
+        mainLight.intensity = exposure;
+        RenderSettings.skybox.SetFloat("_Exposure", exposure);
+    }
+
+    public void hitTheLights()
+    {
+        if (exposure > 1)
+        {
+            exposure -= .0126666f;
+        } else
+        {
+            exposure = 1;
+        }
+        mainLight.intensity = exposure;
+        RenderSettings.skybox.SetFloat("_Exposure", exposure);
     }
 }

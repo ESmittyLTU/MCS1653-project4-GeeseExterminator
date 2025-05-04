@@ -10,14 +10,17 @@ public class Nuke : MonoBehaviour
     public GameObject explosionPrefab;
 
     private DecalProjector crosshair;
+    private GameManager GameManager;
 
     private void Start()
     {
+        GameManager = FindObjectOfType<GameManager>();
         crosshair = FindObjectOfType<DecalProjector>();
     }
 
     private void FixedUpdate()
     {
+        GameManager.dimTheLights();
         rb.AddForce(Physics.gravity * gravMultiplier, ForceMode.Acceleration);
     }
 

@@ -16,6 +16,7 @@ public class Goose : MonoBehaviour
     public float landmineCooldownSeconds = 10f;
     public int landmineChance = 5; // Chance out of 10 to spawn landmine
     public int health = 3;
+    public Animator anim;
 
     private float damageTimer = 0;
     private float landmineTimer = 0;
@@ -81,9 +82,11 @@ public class Goose : MonoBehaviour
         if (!IsGrounded() && rb.velocity.y < -1f)
         {
             rb.AddForce(Physics.gravity * gooseFallGravity, ForceMode.Acceleration);
+            anim.Play("geese-floating");
         }
         else
         {
+            anim.Play("running");
             rb.AddForce(Physics.gravity * gooseStandardGravity, ForceMode.Acceleration);
         }
     }

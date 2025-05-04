@@ -16,12 +16,14 @@ public class FirstPersonController : MonoBehaviour
     public GameObject bulletPrefab;
     public Transform barrelTip;
     public float shotDelay = 1.5f;
-    public GameObject gun, launcher;
-    public int selectedWeapon = 2;
+    public GameObject gun, laserPointer;
+    public int selectedWeapon = 1;
+    public GameObject projectorHolder;
 
     public static int health;
     public static Vector3 playerPos;
     public static bool invincible = false;
+
 
     private Rigidbody rb;
     private Transform cameraTransform;
@@ -113,7 +115,25 @@ public class FirstPersonController : MonoBehaviour
                 }
             }
         }
-    }
+
+        //Weapon switching
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            gun.SetActive(true);
+            laserPointer.SetActive(false);
+            selectedWeapon = 1;
+            projectorHolder.SetActive(false);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            gun.SetActive(false);
+            laserPointer.SetActive(true);
+            selectedWeapon = 2;
+            projectorHolder.SetActive(true);
+        }
+
+
+}
 
     private bool IsGrounded()
     {
