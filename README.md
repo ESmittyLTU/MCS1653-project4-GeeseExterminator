@@ -10,57 +10,87 @@
 ---
 
 # Required ReadMe Info for ALL MCS1653 Projects
-* **Project**   - 
-* **Your Name** - 
-* **Date**      - 
+* **Project**   - Geese Exterminator 9 Bajillion
+* **Your Name** - Eli Smith
+* **Date**      - May 5, 2025
 
 <br>
 
 1. **What are the controls to your game? How do we play?**
 
-
+Exterminate 30 geese to win!
+Press 1 to equip a pistol
+Press 2 to equip a laser pointer
+Left click to shoot held weapon
+You have 10 health, so don't let the geese hit you or walk over landmines!
 
 <br>
 
 2. **What creative additions did you make? How can we find them?**
 
-
+Level Design
+Project Management
+Gameplay programming
 
 <br>
 
 3. **Any assets used that you didn't create yourself?** <br> (art, music, etc. Just tell us where you got it, link it here)
 
+Gameplay music:
+Music: https://www.bensound.com/free-music-for-videos
+License code: F5RD7FMG0S1YDMY8
 
+title music:
+Royalty Free Music: Bensound.com
+License code: 1QDRDRQHQNPANY16
+
+bomb sound:
+Bomb.wav by jobro -- https://freesound.org/s/76151/ -- License: Attribution 3.0
+
+hit sound:
+Hit_01.wav by LittleRobotSoundFactory -- https://freesound.org/s/270326/ -- License: Attribution 4.0
+
+gunshot:
+Short Gunshot.wav by JohanDeecke -- https://freesound.org/s/369528/ -- License: Attribution 3.0
+
+goose honk:
+Goose Shocked 1.aiff by ChunaawChika09 -- https://freesound.org/s/581159/ -- License: Creative Commons 0
+
+goose death:
+42 hn_duckexplodes.wav by cmusounddesign -- https://freesound.org/s/71985/ -- License: Attribution 4.0
+
+landmines:
+big boom by SamsterBirdies -- https://freesound.org/s/435695/ -- License: Creative Commons 0
 
 <br>
 
 4. **Did you receive help from anyone outside this class?** <br> (list their names and what they helped with)
 
-
+No
 
 <br>
 
 5. **Did you get help from any AI Code Assistants?** <br> (Tell us which .cs file to look in for the citation and describe what you learned)
 
-
+No
 
 <br>
 
 6. **Did you get help from any online websites, videos, or tutorials?** <br> (link them here)
 
-
+Various unity discussion boards and google response, no explicit tutorials
 
 <br>
 
 7. **What trouble did you have with this project?**
 
-
+Getting the Vignette components and working with the renderer really stumped me. Also realized I can generally only use static variables within static methods (unless I include object references).
 
 <br>
 
 8. **Is there anything else we should know?**
 
-
+I'm the man, and it is your duty to EXTERMINATE all geese, says me.
 
 
 <br><br><br><br><br>

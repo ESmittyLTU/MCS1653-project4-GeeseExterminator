@@ -329,7 +329,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.25, y: 1.25, z: 1.25}
+  m_Size: {x: 2.25, y: 2.25, z: 2.25}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &3560904632997916682
 MonoBehaviour:
@@ -344,3 +344,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 3
+  hurtSound: {fileID: 8300000, guid: 6e9b8b10d45bc994c8661e05182bb415, type: 3}

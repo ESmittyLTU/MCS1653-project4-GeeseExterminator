@@ -19,6 +19,7 @@ public class FirstPersonController : MonoBehaviour
     public GameObject gun, laserPointer;
     public int selectedWeapon = 1;
     public GameObject projectorHolder;
+    public AudioClip shotSound;
 
     public static int health;
     public static Vector3 playerPos;
@@ -106,12 +107,13 @@ public class FirstPersonController : MonoBehaviour
         firingTimer += Time.deltaTime;
         if (Input.GetMouseButtonDown(0))
         {
-            if (selectedWeapon == 1) 
+            if (selectedWeapon == 1 && !PauseMenu.paused) 
             {
                 if (firingTimer >= shotDelay)
                 {
                     firingTimer = 0;
                     Instantiate(bulletPrefab, barrelTip.position, barrelTip.rotation);
+                    AudioSource.PlayClipAtPoint(shotSound, playerPos);
                 }
             }
         }

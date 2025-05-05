@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.PostProcessing;
 
 public class Goose : MonoBehaviour
 {
@@ -17,16 +19,20 @@ public class Goose : MonoBehaviour
     public int landmineChance = 5; // Chance out of 10 to spawn landmine
     public int health = 3;
     public Animator anim;
+    public AudioClip hurtSound;
+    public AudioClip gooseHonk;
+    public AudioClip gooseDies;
 
     private float damageTimer = 0;
     private float landmineTimer = 0;
     private Rigidbody rb;
+    private GameManager gameManager;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        
+        gameManager = FindObjectOfType<GameManager>().GetComponent<GameManager>();
     }
 
     // Update is called once per frame
@@ -67,13 +73,19 @@ public class Goose : MonoBehaviour
         {
             rb.velocity = Vector3.up * jumpSpeed;
         }
+
+        if (Random.Range(1, 500) == 1)
+        {
+            AudioSource.PlayClipAtPoint(gooseHonk, transform.position);
+        }
     }
 
     public void deathActions()
     {
         GameManager.geeseKilled++;
+        AudioSource.PlayClipAtPoint(gooseDies, transform.position);
         Debug.Log($"{GameManager.geeseKilled} geese killed!");
-        GameManager.winCheck();
+        gameManager.winCheck();
         Destroy(gameObject);
     }
 
@@ -97,7 +109,10 @@ public class Goose : MonoBehaviour
         if (!FirstPersonController.invincible && damageTimer > damageCooldownSeconds && other.gameObject.CompareTag("Player"))
         {
             FirstPersonController.health--;
+            GameManager.playerHurting = true;
+            AudioSource.PlayClipAtPoint(hurtSound, FirstPersonController.playerPos);
             damageTimer = 0;
+            gameManager.loseCheck();
             FirstPersonController.invincible = true;
             Debug.Log($"Player took damage. Health: {FirstPersonController.health}");
 

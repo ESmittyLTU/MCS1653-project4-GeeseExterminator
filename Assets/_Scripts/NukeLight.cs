@@ -42,7 +42,7 @@ public class NukeLight : MonoBehaviour
 
     private void FixedUpdate()
     {
-        nukeLight.intensity -= 15000;
+        nukeLight.intensity -= 7500;
         if (nukeLight.intensity < 0 ) Destroy(nukeLight);
 
         GameManager.hitTheLights();

@@ -48,6 +48,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 125
   damage: 1
+  maxTimeAlive: 2
+  hit: {fileID: 8300000, guid: cff2c94fcbe192743a8b5355e28bd83d, type: 3}
 --- !u!65 &1719991462272698998
 BoxCollider:
   m_ObjectHideFlags: 0

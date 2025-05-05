@@ -7,6 +7,7 @@ public class Bullet : MonoBehaviour
     public float speed = 20f;
     public int damage = 1;
     public float maxTimeAlive = 2f;
+    public AudioClip hit;
 
     private bool hitSomething = false;
     private float timeAlive = 0;
@@ -26,6 +27,7 @@ public class Bullet : MonoBehaviour
     {
         if (!hitSomething && other.gameObject.CompareTag("Enemy"))
         {
+            AudioSource.PlayClipAtPoint(hit, other.GetContact(0).point);
             other.gameObject.GetComponent<Goose>().health -= damage;
         }
         hitSomething = true;

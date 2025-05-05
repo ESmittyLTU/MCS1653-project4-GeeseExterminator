@@ -14,6 +14,7 @@ public class Launcher : MonoBehaviour
     public float launcherCooldown = 15f;
     public GameObject nukePrefab;
     public Image launcherRadialMeter;
+    public AudioClip bombSound;
 
     private float launcherTimer = 10;
     private Ray laserRay;
@@ -66,6 +67,8 @@ public class Launcher : MonoBehaviour
         //Reset timer and disable laser
         launcherTimer = 0;
         laser.SetActive(false);
+
+        AudioSource.PlayClipAtPoint(bombSound, crosshairProjectorHolder.transform.position);
 
         Instantiate(nukePrefab, crosshairProjectorHolder.transform.position + Vector3.up * 300, Quaternion.Euler(10, 0, 10));
         

@@ -62,6 +62,9 @@ MonoBehaviour:
   landmineChance: 5
   health: 3
   anim: {fileID: 7819051599237513522}
+  hurtSound: {fileID: 8300000, guid: cff2c94fcbe192743a8b5355e28bd83d, type: 3}
+  gooseHonk: {fileID: 8300000, guid: ff34fc12043d9e544abda2476344d58e, type: 3}
+  gooseDies: {fileID: 8300000, guid: 194ff47cf9c22ab4fa89447fd5b2685b, type: 3}
 --- !u!54 &364706993513351568
 Rigidbody:
   m_ObjectHideFlags: 0

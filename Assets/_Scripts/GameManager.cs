@@ -1,7 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,14 +16,23 @@ public class GameManager : MonoBehaviour
     public Light mainLight;
     public LayerMask groundLayerMask;
     public float initialDelayAmount = 10f;
+    public Volume ppVolume;
+    public GameObject winScreen;
+    public GameObject loseScreen;
+    public AudioClip gooseHonk;
+    public TextMeshProUGUI geeseCounter, livesCounter;
 
     public static int geeseKilledToWin = 25;
     public static int geeseKilled = 0;
+    public static bool playerHurting = false;
 
     private float gooseSpawnTimer = 0f;
     private float exposure = 1;
     private bool initialDelay = true;
     private float initialTimer = 0f;
+    private Vignette ppVignette;
+    private Vignette tempVignette;
+    private float intensity = .35f;
 
     // Start is called before the first frame update
     void Start()
@@ -28,36 +40,18 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         geeseKilledToWin = geeseWinRequirement;
-    }
 
-    /* CHECKLIST
-     * 
-     * [X] Player movement
-     * [X] Geese Spawning (Crashland within range of player)
-     * [X] Geese movement (towards player, navmesh video)
-     * [X] Pistol (held near player view, fires bullets (capsule, trail renderer))
-     * [X] Geese take damage when bullet hits them (use bool damageDealt to prevent pierce)
-     * [X] Geese deal damage to player (onCollisionStay with a cooldown)
-     * [X] Geese have a chance to lay landmines every 10/15 seconds
-     * [X] Landmines explode and deal damage to player on contact
-     * [X] Player wins after killing X geese (static var)
-     * 
-     * FINAL BUILD STATUS
-     * [ ] Terrain
-     * [ ] Bullet dies after time
-     * [ ] Pistol can't fire infinitely
-     * [ ] Pressing one or two disables/enables rocket launcher/pistol
-     * [ ] Geese animations
-     * [ ] Landmine textures
-     * 
-     * STRETCH/UNSURE
-     * [ ] Cranked (player dies within certain amount of time without killing a goose, just use static timer)
-     * [ ] 
-     * [ ]
-     * [ ]
-     * [ ]
-     * 
-     */
+        livesCounter.SetText("Health: 10");
+        geeseCounter.SetText("Dead Geese: 0/30");
+
+        mainLight.intensity = 1;
+        RenderSettings.skybox.SetFloat("_Exposure", 1);
+
+        if (ppVolume.profile.TryGet(out tempVignette))
+        {
+            ppVignette = tempVignette;
+        }
+    }
 
     // Update is called once per frame
     void Update()
@@ -77,6 +71,20 @@ public class GameManager : MonoBehaviour
             spawnGoose();
             gooseSpawnTimer = 0f;
         }
+
+        float vignIntensity = ((float)ppVignette.intensity);
+        if (playerHurting && vignIntensity <= .005)
+        {
+            intensity = .35f;
+            ppVignette.intensity.Override(intensity);
+            playerHurting = false;
+        } 
+        
+        if (vignIntensity > 0)
+        {
+            intensity -= .0007f;
+            ppVignette.intensity.Override(intensity);
+        }
     }
 
     public void spawnGoose()
@@ -94,14 +102,37 @@ public class GameManager : MonoBehaviour
         {
             Vector3 gooseSpawn = hit.point;
             Instantiate(goosePrefab, gooseSpawn, Quaternion.identity);
+            AudioSource.PlayClipAtPoint(gooseHonk, gooseSpawn);
         }
     }
 
-    public static void winCheck()
+    public void winCheck()
     {
+        geeseCounter.SetText($"Dead Geese: {geeseKilled}/30");
         if (geeseKilled >= geeseKilledToWin)
         {
+            
+            winScreen.SetActive(true);
+            Time.timeScale = 0f;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+
             Debug.Log("YOU WON!");
+        }
+    }
+
+    public void loseCheck()
+    {
+        livesCounter.SetText($"Health: {FirstPersonController.health}");
+        if (FirstPersonController.health <= 0)
+        {
+            
+            loseScreen.SetActive(true);
+            Time.timeScale = 0f;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+
+            Debug.Log("YOU LOST!");
         }
     }
 
